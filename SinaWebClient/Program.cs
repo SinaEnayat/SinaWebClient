@@ -7,13 +7,7 @@ using System.Text.Json.Nodes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-Console.WriteLine("1-View list of courses and their basic details\n" +
-                  "2-View detailed information about a specific course including instructor and enrolled students\n" +
-                  "3-Create a new course\n" +
-                  "4-Enroll a student in a course\n" +
-                  "5-Update course details\n" +
-                  "6-Delete a course\n" +
-                  "7-Exit the application\n");
+
 
 //HttpClient httpClient = new HttpClient();
 
@@ -21,14 +15,23 @@ Console.WriteLine("1-View list of courses and their basic details\n" +
 
 while (true)
 {
+    Console.WriteLine("1-View list of courses and their basic details\n" +
+                  "2-View detailed information about a specific course including instructor and enrolled students\n" +
+                  "3-Create a new course\n" +
+                  "4-Enroll a student in a course\n" +
+                  "5-Update course details\n" +
+                  "6-Delete a course\n" +
+                  "7-Exit the application\n");
     using (HttpClient httpClient = new HttpClient())
     {
         httpClient.BaseAddress = new Uri("https://localhost:7040/");
 
         int userOption = Convert.ToInt32(Console.ReadLine());
+       
 
         if (userOption == 1)
         {
+            Console.Clear();
             HttpResponseMessage response = await httpClient.GetAsync("Course/GetAllCourses");
             if (response.IsSuccessStatusCode)
             {
@@ -39,9 +42,15 @@ while (true)
                 // Process the response body
                 Console.WriteLine(formattedJson);
             }
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
+
         }
         else if (userOption == 2)
         {
+            Console.Clear();
+
             Console.WriteLine("Enter your Id : ");
             string id = Console.ReadLine();
             HttpResponseMessage response = await httpClient.GetAsync("Course/GetSpecific?CourseId=" + id);
@@ -54,10 +63,15 @@ while (true)
                 // Process the response body
                 Console.WriteLine(formattedJson);
             }
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
         }
         else if (userOption == 3)
         {
+            Console.Clear();
             Console.WriteLine("Enter course name :");
+
             string name = Console.ReadLine();
 
             var requestData = new { courseName = name };
@@ -66,9 +80,23 @@ while (true)
 
             HttpResponseMessage response = await httpClient.PostAsync("Course/CreateCourse", content);
 
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("new course created Successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Fail!");
+            }
+
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
         }
         else if (userOption == 4)
         {
+            Console.Clear();
+
             Console.WriteLine("Enter course Id :");
             string CourseId = Console.ReadLine();
             Console.WriteLine("Enter student Id :");
@@ -80,9 +108,24 @@ while (true)
             var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await httpClient.PostAsync("Course/EnrollStudent", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Student enrolled!");
+            }
+            else
+            {
+                Console.WriteLine("Fail!");
+            }
+
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
         }
         else if (userOption == 5)
         {
+            Console.Clear();
+
             Console.WriteLine("Enter course Id :");
             string CourseId = Console.ReadLine();
             Console.WriteLine("Enter new course name :");
@@ -96,13 +139,41 @@ while (true)
             var content = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await httpClient.PutAsync("Course/UpdateCourse", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Update was Successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Fail!");
+            }
+
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
         }
         else if (userOption == 6)
         {
+            Console.Clear();
+
             Console.WriteLine("Enter course Id :");
             string CourseId = Console.ReadLine();
 
             HttpResponseMessage response = await httpClient.DeleteAsync("Course/DeleteCourse?Id="+CourseId);
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Delete was Successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Fail!");
+            }
+
+            Console.WriteLine("Click nay key to continue!");
+            System.Console.ReadKey();
+            Console.Clear();
         }
         else if (userOption == 7)
         {
