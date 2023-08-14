@@ -15,13 +15,13 @@ using Newtonsoft.Json.Linq;
 
 while (true)
 {
-    Console.WriteLine("1-View list of courses and their basic details\n" +
-                  "2-View detailed information about a specific course including instructor and enrolled students\n" +
-                  "3-Create a new course\n" +
-                  "4-Enroll a student in a course\n" +
-                  "5-Update course details\n" +
-                  "6-Delete a course\n" +
-                  "7-Exit the application\n");
+    Console.WriteLine("1-View list of courses and their basic details\n\n" +
+                      "2-View detailed information about a specific course including instructor and enrolled students\n\n" +
+                      "3-Create a new course\n\n" +
+                      "4-Enroll a student in a course\n\n" +
+                      "5-Update course details\n\n" +
+                      "6-Delete a course\n\n" +
+                      "7-Exit the application\n\n");
     using (HttpClient httpClient = new HttpClient())
     {
         httpClient.BaseAddress = new Uri("https://localhost:7040/");
@@ -38,11 +38,14 @@ while (true)
                 string responseBody = await response.Content.ReadAsStringAsync();
                 JArray Jarrayobject = JArray.Parse(responseBody);
                 string formattedJson = JsonConvert.SerializeObject(Jarrayobject, Formatting.Indented);
-
                 // Process the response body
                 Console.WriteLine(formattedJson);
             }
-            Console.WriteLine("Click nay key to continue!");
+            else
+            {
+                Console.WriteLine("Fail!");
+            }
+            Console.WriteLine("Click any key to continue!");
             System.Console.ReadKey();
             Console.Clear();
 
@@ -62,6 +65,10 @@ while (true)
 
                 // Process the response body
                 Console.WriteLine(formattedJson);
+            }
+            else
+            {
+                Console.WriteLine("Fail!");
             }
             Console.WriteLine("Click nay key to continue!");
             System.Console.ReadKey();
@@ -89,7 +96,7 @@ while (true)
                 Console.WriteLine("Fail!");
             }
 
-            Console.WriteLine("Click nay key to continue!");
+            Console.WriteLine("Click any key to continue!");
             System.Console.ReadKey();
             Console.Clear();
         }
@@ -118,7 +125,7 @@ while (true)
                 Console.WriteLine("Fail!");
             }
 
-            Console.WriteLine("Click nay key to continue!");
+            Console.WriteLine("Click any key to continue!");
             System.Console.ReadKey();
             Console.Clear();
         }
@@ -149,7 +156,7 @@ while (true)
                 Console.WriteLine("Fail!");
             }
 
-            Console.WriteLine("Click nay key to continue!");
+            Console.WriteLine("Click any key to continue!");
             System.Console.ReadKey();
             Console.Clear();
         }
@@ -171,7 +178,7 @@ while (true)
                 Console.WriteLine("Fail!");
             }
 
-            Console.WriteLine("Click nay key to continue!");
+            Console.WriteLine("Click any key to continue!");
             System.Console.ReadKey();
             Console.Clear();
         }
